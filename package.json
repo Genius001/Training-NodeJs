@@ -8,7 +8,12 @@
     "dev": "nodemon index.js --ignore 'tmp/*'",
     "gendoc": "node ./swaggerAutogen.js",
     "seed": "node ./prisma/seeder/index.js",
-    "test": "dotenv -e .env.test -- cross-env NODE_ENV=test yarn prisma migrate deploy && jest -i --detectOpenHandles"
+    "seed:test": "dotenv -e .env.test -- node ./prisma/seeder/index.js",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "migrate:deploy": "prisma migrate deploy",
+    "jest": "jest -i --collectCoverage",
+    "test": "dotenv -e .env.test -- cross-env NODE_ENV=test yarn migrate:deploy && yarn seed:test && yarn jest"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",

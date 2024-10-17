@@ -67,48 +67,48 @@ model users {
   createdBy      String?   @db.VarChar
   updatedBy      String?   @db.VarChar
   order          order[]
-  role           roles  @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  role           roles     @relation(fields: [roleId], references: [id], onDelete: Cascade)
 }
 
 model roles {
-  id             Int       @id @default(autoincrement())
-  role           String    @unique
-  createdDt      DateTime? @default(now()) @db.Timestamp(6)
-  updatedDt      DateTime? @updatedAt
-  createdBy      String?   @db.VarChar
-  updatedBy      String?   @db.VarChar
-  access         access[]
-  user           users[]
+  id        Int       @id @default(autoincrement())
+  role      String    @unique
+  createdDt DateTime? @default(now()) @db.Timestamp(6)
+  updatedDt DateTime? @updatedAt
+  createdBy String?   @db.VarChar
+  updatedBy String?   @db.VarChar
+  access    access[]
+  user      users[]
 }
 
 model menus {
-  id             Int       @id @default(autoincrement())
-  name           String    @unique
-  title          String
-  icon           String?
-  path           String?
-  is_submenu     Boolean   @default(false)
-  parent_id      Int?
-  permissions    String[]
-  createdDt      DateTime? @default(now()) @db.Timestamp(6)
-  updatedDt      DateTime? @updatedAt
-  createdBy      String?   @db.VarChar
-  updatedBy      String?   @db.VarChar
-  submenu        menus?  @relation("submenu", fields: [parent_id], references: [id])
-  parent         menus[] @relation("submenu")
-  access         access[]
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  title       String
+  icon        String?
+  path        String?
+  is_submenu  Boolean   @default(false)
+  parent_id   Int?
+  permissions String[]
+  createdDt   DateTime? @default(now()) @db.Timestamp(6)
+  updatedDt   DateTime? @updatedAt
+  createdBy   String?   @db.VarChar
+  updatedBy   String?   @db.VarChar
+  submenu     menus?    @relation("submenu", fields: [parent_id], references: [id])
+  parent      menus[]   @relation("submenu")
+  access      access[]
 }
 
-model access{
-  id             Int       @id @default(autoincrement())
-  role_id        Int
-  menu_id        Int
-  visible        Boolean   @default(true)
-  grant          Json
-  createdDt      DateTime? @default(now()) @db.Timestamp(6)
-  updatedDt      DateTime? @updatedAt
-  createdBy      String?   @db.VarChar
-  updatedBy      String?   @db.VarChar
-  role           roles     @relation(fields: [role_id], references: [id], onDelete: Cascade)
-  menu           menus     @relation(fields: [menu_id], references: [id], onDelete: Cascade)
+model access {
+  id        Int       @id @default(autoincrement())
+  role_id   Int
+  menu_id   Int
+  visible   Boolean   @default(true)
+  grant     Json
+  createdDt DateTime? @default(now()) @db.Timestamp(6)
+  updatedDt DateTime? @updatedAt
+  createdBy String?   @db.VarChar
+  updatedBy String?   @db.VarChar
+  role      roles     @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  menu      menus     @relation(fields: [menu_id], references: [id], onDelete: Cascade)
 }

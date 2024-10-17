@@ -15,6 +15,7 @@ async function accessSeed() {
   await prisma.access.deleteMany();
   return await prisma.access.createMany({
     data: ACCESS,
+    skipDuplicates: true,
   });
 }
 

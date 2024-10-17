@@ -20,10 +20,10 @@ class BaseModel {
       skip: (page - 1) * limit,
       take: limit,
     };
-    
+
     const [resources, count] = await prisma.$transaction([
       this.model.findMany(query),
-      this.model.count({where})
+      this.model.count({ where })
     ]);
 
     return {
@@ -65,7 +65,7 @@ class BaseModel {
     return this.model.count(where);
   };
 
-  transaction = async(query) => {
+  transaction = async (query) => {
     return prisma.$transaction(query)
   }
 }
