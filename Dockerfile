@@ -1,24 +1,21 @@
-# Use the official Node.js image as the base image
-FROM node:16.13
+# Menggunakan Node.js versi terbaru yang kompatibel dengan dependensi
+FROM node:18-alpine
 
-
-# Set the working directory
+# Set working directory di dalam container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Salin package.json dan yarn.lock terlebih dahulu untuk optimasi cache
 COPY package*.json ./
-COPY prisma ./prisma/
+COPY yarn.lock ./
 
-# Install dependencies
-RUN yarn install
+# Instal semua dependensi
+RUN yarn install --frozen-lockfile
 
-# Copy the rest of the application code
+# Salin semua kode aplikasi setelah dependensi diinstal
 COPY . .
 
-RUN npx prisma generate-
-
-# Expose the port the app runs on
+# Expose port 3000 agar aplikasi dapat diakses
 EXPOSE 3000
 
-# Command to run the application
-CMD ["sh", '-c',  "npx prisma migrate dev & yarn dev"]
+# Menjalankan aplikasi saat container mulai
+CMD ["yarn", "start"]
