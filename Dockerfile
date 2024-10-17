@@ -15,6 +15,12 @@ RUN yarn install --frozen-lockfile
 COPY prisma ./prisma/
 RUN npx prisma generate
 
+# Salin file .env
+COPY .env .env
+
+# Jalankan migrasi Prisma agar database sesuai dengan skema
+RUN npx prisma migrate deploy
+
 # Salin seluruh kode aplikasi
 COPY . .
 
