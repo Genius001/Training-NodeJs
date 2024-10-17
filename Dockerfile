@@ -1,21 +1,25 @@
-# Menggunakan Node.js versi terbaru yang kompatibel dengan dependensi
+# Gunakan Node.js versi 18 yang kompatibel dengan Prisma
 FROM node:18-alpine
 
-# Set working directory di dalam container
+# Set working directory
 WORKDIR /app
 
-# Salin package.json dan yarn.lock terlebih dahulu untuk optimasi cache
+# Salin package.json dan yarn.lock untuk cache instalasi dependensi
 COPY package*.json ./
 COPY yarn.lock ./
 
-# Instal semua dependensi
+# Install dependencies menggunakan yarn
 RUN yarn install --frozen-lockfile
 
-# Salin semua kode aplikasi setelah dependensi diinstal
+# Salin file Prisma dan generate client Prisma
+COPY prisma ./prisma/
+RUN npx prisma generate
+
+# Salin seluruh kode aplikasi
 COPY . .
 
-# Expose port 3000 agar aplikasi dapat diakses
+# Expose port untuk aplikasi
 EXPOSE 3000
 
-# Menjalankan aplikasi saat container mulai
+# Perintah untuk menjalankan aplikasi
 CMD ["yarn", "start"]
