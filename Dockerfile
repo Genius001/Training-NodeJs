@@ -5,18 +5,17 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Salin package.json dan yarn.lock untuk cache instalasi dependensi
-COPY package*.json ./
-COPY yarn.lock ./
+COPY package*.json yarn.lock ./
 
 # Install dependencies menggunakan yarn
 RUN yarn install --frozen-lockfile
 
+# Salin file .env lebih awal agar tersedia saat generate Prisma
+COPY .env .env
+
 # Salin file Prisma dan generate client Prisma
 COPY prisma ./prisma/
 RUN npx prisma generate
-
-# Salin file .env
-COPY .env .env
 
 # Jalankan migrasi Prisma agar database sesuai dengan skema
 RUN npx prisma migrate deploy
