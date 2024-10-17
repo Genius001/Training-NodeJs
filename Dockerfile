@@ -1,30 +1,30 @@
-# Gunakan Node.js versi 18 yang kompatibel dengan Prisma
+# Use Node.js version 18 compatible with Prisma
 FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Salin package.json dan yarn.lock untuk cache instalasi dependensi
+# Copy package.json and yarn.lock for dependency caching
 COPY package*.json yarn.lock ./
 
-# Install dependencies menggunakan yarn
+# Install dependencies using yarn
 RUN yarn install --frozen-lockfile
 
-# Salin file .env lebih awal agar tersedia saat generate Prisma
+# Copy .env file before generating Prisma client
 COPY .env .env
 
-# Salin file Prisma dan generate client Prisma
+# Copy Prisma files and generate Prisma client
 COPY prisma ./prisma/
 RUN npx prisma generate
 
-# Jalankan migrasi Prisma agar database sesuai dengan skema
+# Run Prisma migrations to ensure database schema is up-to-date
 RUN npx prisma migrate deploy
 
-# Salin seluruh kode aplikasi
+# Copy entire application code
 COPY . .
 
-# Expose port untuk aplikasi
+# Expose port for the application
 EXPOSE 3000
 
-# Perintah untuk menjalankan aplikasi
+# Command to run the application
 CMD ["yarn", "start"]
