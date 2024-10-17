@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.88% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/36</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>32/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">66.66% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>2/3</span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.64% </span>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>3/3</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">91.17% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>23/34</span>
+                <span class='fraction'>31/34</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -210,22 +210,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -318,23 +318,23 @@ class AuthController extends BaseController {
     router.post("/signup", this.validation(signUpSchema), this.signUp);
   }
 &nbsp;
-  signIn = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
-      const user = <span class="cstat-no" title="statement not covered" >await this.model.getOne({ where: { email } });</span>
+  signIn = async (req, res, next) =&gt; {
+    try {
+      const { email, password } = req.body;
+      const user = await this.model.getOne({ where: { email } });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (!user) <span class="cstat-no" title="statement not covered" >return next(new ValidationError("Invalid email or password"));</span></span>
+      if (!user) return next(new ValidationError("Invalid email or password"));
 &nbsp;
-      const isMatch = <span class="cstat-no" title="statement not covered" >await checkPassword(password, user.password);</span>
+      const isMatch = await checkPassword(password, user.password);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (!isMatch)</span>
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!isMatch)
 <span class="cstat-no" title="statement not covered" >        return next(new ValidationError("Invalid email or password"));</span>
 &nbsp;
-      const token = <span class="cstat-no" title="statement not covered" >createToken({</span>
+      const token = createToken({
         id: user.id,
       });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      return res.status(200).json(</span>
+      return res.status(200).json(
         this.apiSend({
           code: 200,
           status: "success",
@@ -397,7 +397,7 @@ module.exports = router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-16T08:51:00.487Z
+                at 2024-10-17T04:37:18.495Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

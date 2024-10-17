@@ -1,3 +1,4 @@
+console.log(process.env.DATABASE_URL)
 const { PrismaClient } = require("@prisma/client");
 
 const roleSeed = require('./role')

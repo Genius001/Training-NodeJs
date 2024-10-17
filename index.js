@@ -1,5 +1,6 @@
 const envPath = process.env.NODE_ENV === 'development' ?
   '.env' : `.env.${process.env.NODE_ENV}`
+console.log(envPath)
 require('dotenv').config({ path: envPath })
 const express = require("express");
 const app = express();
