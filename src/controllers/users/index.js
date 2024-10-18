@@ -37,8 +37,8 @@ const userUpdateSchema = Joi.object({
 class UserController extends BaseController {
   constructor(model) {
     super(model);
-    router.get("/", this.getAll);
-    router.post("/", this.validation(userCreateSchema), authorize, checkRole(['admin']), this.checkUnique, this.encrypt,  this.create);
+    router.get("/", authorize, checkRole(['admin']), this.getAll);
+    router.post("/", this.validation(userCreateSchema), authorize, checkRole(['admin']), this.checkUnique, this.encrypt, this.create);
     router.get("/:id", this.get);
     router.put("/:id", this.validation(userUpdateSchema), authorize, checkRole(['admin']), this.update);
     router.delete("/:id", this.delete);
@@ -61,13 +61,13 @@ class UserController extends BaseController {
         phone_number: true
       }
     });
-    
+
     if (checkUnique)
       return next(new ValidationError("email or phone number already exist"));
 
     next()
   };
-  
+
   encrypt = async (req, res, next) => {
     const encryptedPass = await encryptPassword(req.body.password);
     req.body.password = encryptedPass;
